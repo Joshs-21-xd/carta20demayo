@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>20 de Mayo — Día de la Carta de Amor</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+
+*, *::before, *::after{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --rose:#B83060;
+  --rose-light:#E07090;
+  --rose-pale:#F5D0DC;
+  --rose-deep:#6A1535;
+  --rose-blush:#FAE8EE;
+  --cream:#FDF4ED;
+  --parchment:#F7E8CE;
+  --parch-dark:#EDD9A8;
+  --ink:#281520;
+  --gold:#B8882A;
+  --gold-light:#E0BC6A;
+  --burgundy:#8B1A3A;
+  --lilac:#9B6B8A;
+}
+
+body{
+  background:var(--cream);
+  font-family:'Cormorant Garamond', serif;
+  color:var(--ink);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* Fondo */
+
+.bg-canvas{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  background:
+    radial-gradient(ellipse at 15% 15%, rgba(184,48,96,0.07) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 85%, rgba(184,48,96,0.07) 0%, transparent 45%),
+    linear-gradient(160deg,#FDF4ED 0%,#FAE8EE 50%,#FDF4ED 100%);
+}
+
+/* pétalos */
+
+.petals-layer{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+.petal{
+  position:absolute;
+  opacity:0;
+  animation:petalFall linear infinite;
+}
+
+@keyframes petalFall{
+  0%{
+    transform:translateY(-40px) rotate(0deg);
+    opacity:0;
+  }
+
+  10%{
+    opacity:0.7;
+  }
+
+  100%{
+    transform:translateY(110vh) rotate(720deg);
+    opacity:0;
+  }
+}
+
+/* page */
+
+.page{
+  position:relative;
+  z-index:1;
+  max-width:650px;
+  margin:auto;
+  padding:2rem 1.2rem 4rem;
+}
+
+/* header */
+
+.header{
+  text-align:center;
+  margin-bottom:3rem;
+  animation:fadeDown 1s ease both;
+}
+
+.header .ornament{
+  letter-spacing:5px;
+  color:var(--gold);
+  margin-bottom:.7rem;
+}
+
+.header h1{
+  font-family:'Great Vibes', cursive;
+  font-size:60px;
+  color:var(--rose-deep);
+  line-height:1.1;
+}
+
+.header .tagline{
+  font-style:italic;
+  color:var(--rose-light);
+}
+
+.date-badge{
+  display:inline-block;
+  margin-top:1rem;
+  padding:5px 20px;
+  border:1px solid var(--gold-light);
+  border-radius:20px;
+  font-size:11px;
+  letter-spacing:3px;
+  color:var(--gold);
+}
+
+/* corazones */
+
+.hearts-constellation{
+  display:flex;
+  justify-content:center;
+  gap:1rem;
+  margin-bottom:2rem;
+}
+
+.hc{
+  color:var(--rose);
+  animation:heartbeat 2s infinite;
+}
+
+.hc:nth-child(3){
+  font-size:28px;
+}
+
+@keyframes heartbeat{
+  0%,100%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.2);
+  }
+}
+
+/* cita */
+
+.frase-dia-card{
+  background:white;
+  border:1px solid var(--rose-pale);
+  border-radius:18px;
+  padding:1.5rem;
+  text-align:center;
+  margin-bottom:2rem;
+}
+
+.frase-dia-title{
+  letter-spacing:3px;
+  font-size:11px;
+  color:var(--gold);
+  margin-bottom:.8rem;
+}
+
+.frase-dia-text{
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-size:18px;
+  color:var(--rose-deep);
+  line-height:1.7;
+}
+
+.frase-dia-author{
+  margin-top:.6rem;
+  color:var(--lilac);
+  font-style:italic;
+}
+
+/* sobre */
+
+#screen-envelope{
+  text-align:center;
+}
+
+.envelope-wrap{
+  display:inline-block;
+  position:relative;
+  width:320px;
+  height:230px;
+  cursor:pointer;
+  margin-bottom:1rem;
+}
+
+.env-body{
+  position:absolute;
+  bottom:0;
+  width:320px;
+  height:190px;
+  background:var(--parchment);
+  border-radius:5px 5px 14px 14px;
+  overflow:hidden;
+}
+
+.env-tri-l{
+  position:absolute;
+  bottom:0;
+  width:0;
+  height:0;
+  border-left:160px solid rgba(184,48,96,.06);
+  border-right:160px solid transparent;
+  border-bottom:100px solid transparent;
+}
+
+.env-tri-r{
+  position:absolute;
+  bottom:0;
+  right:0;
+  width:0;
+  height:0;
+  border-right:160px solid rgba(184,48,96,.06);
+  border-left:160px solid transparent;
+  border-bottom:100px solid transparent;
+}
+
+.env-flap-wrap{
+  position:absolute;
+  top:40px;
+  width:320px;
+  perspective:700px;
+}
+
+.env-flap{
+  width:0;
+  height:0;
+  border-left:160px solid transparent;
+  border-right:160px solid transparent;
+  border-top:105px solid var(--rose-pale);
+  transform-origin:top center;
+  transition:1s;
+}
+
+.env-flap.open{
+  transform:rotateX(-172deg);
+}
+
+.env-wax{
+  position:absolute;
+  bottom:55px;
+  left:50%;
+  transform:translateX(-50%);
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  background:var(--burgundy);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:24px;
+}
+
+.open-hint{
+  color:var(--rose-light);
+  font-style:italic;
+  margin-bottom:1rem;
+}
+
+/* carta */
+
+#screen-letter{
+  display:none;
+}
+
+.letter-paper{
+  background:var(--parchment);
+  border-radius:6px;
+  padding:3rem 2.5rem;
+  line-height:2;
+  position:relative;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.letter-top-ornament{
+  text-align:center;
+  font-family:'Great Vibes', cursive;
+  font-size:34px;
+  color:var(--rose-light);
+  margin-bottom:1.5rem;
+}
+
+.letter-date-loc{
+  display:flex;
+  justify-content:space-between;
+  color:var(--gold);
+  margin-bottom:2rem;
+  font-style:italic;
+}
+
+.letter-to{
+  font-size:20px;
+  color:var(--rose-deep);
+  margin-bottom:1rem;
+}
+
+.letter-saludo{
+  font-style:italic;
+  color:var(--lilac);
+  margin-bottom:1rem;
+}
+
+.letter-body{
+  white-space:pre-line;
+  font-size:18px;
+}
+
+.quote-box{
+  background:var(--rose-blush);
+  padding:1rem 1.3rem;
+  border-left:3px solid var(--rose-light);
+  border-radius:0 12px 12px 0;
+  margin:2rem 0;
+  font-style:italic;
+  color:var(--rose-deep);
+}
+
+.quote-author{
+  display:block;
+  text-align:right;
+  margin-top:.5rem;
+  color:var(--rose-light);
+}
+
+.letter-despedida{
+  display:flex;
+  justify-content:space-between;
+  margin-top:2rem;
+}
+
+.letter-firma{
+  font-family:'Great Vibes', cursive;
+  font-size:34px;
+  color:var(--rose-deep);
+}
+
+.letter-posdata{
+  margin-top:2rem;
+  border-top:1px dashed var(--rose-pale);
+  padding-top:1rem;
+  color:var(--lilac);
+  font-style:italic;
+}
+
+.letter-wax-seal{
+  text-align:center;
+  margin-top:2rem;
+}
+
+.wax-circle{
+  display:inline-flex;
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  background:var(--burgundy);
+  color:white;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+}
+
+/* botones */
+
+.btn-row{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:1.5rem;
+}
+
+.btn-primary,
+.btn-secondary{
+  border:none;
+  border-radius:30px;
+  padding:12px 28px;
+  cursor:pointer;
+  font-family:'Cormorant Garamond', serif;
+  font-size:16px;
+}
+
+.btn-primary{
+  background:var(--rose);
+  color:white;
+}
+
+.btn-secondary{
+  background:white;
+  color:var(--rose);
+  border:1px solid var(--rose);
+}
+
+/* toast */
+
+.toast{
+  position:fixed;
+  bottom:2rem;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--rose-deep);
+  color:white;
+  padding:10px 22px;
+  border-radius:30px;
+  opacity:0;
+  transition:.3s;
+}
+
+.toast.show{
+  opacity:1;
+}
+
+/* animaciones */
+
+@keyframes fadeDown{
+  from{
+    opacity:0;
+    transform:translateY(-20px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg-canvas"></div>
+
+<div class="petals-layer" id="petalsLayer"></div>
+
+<div class="toast" id="toast"></div>
+
+<div class="page">
+
+<header class="header">
+  <p class="ornament">✦ Una celebración del corazón ✦</p>
+
+  <h1>Día de la Carta de Amor</h1>
+
+  <p class="tagline">
+    Porque algunas palabras merecen tinta y papel
+  </p>
+
+  <span class="date-badge">
+    20 · Mayo · 2026
+  </span>
+</header>
+
+<div class="hearts-constellation">
+  <span class="hc">♥</span>
+  <span class="hc">♥</span>
+  <span class="hc">♥</span>
+  <span class="hc">♥</span>
+  <span class="hc">♥</span>
+</div>
+
+<!-- cita -->
+
+<div class="frase-dia-card">
+  <p class="frase-dia-title">
+    ✦ Cita de amor del día ✦
+  </p>
+
+  <p class="frase-dia-text">
+    “Eres la casualidad más bonita que llegó para quedarse.”
+  </p>
+
+  <p class="frase-dia-author">
+    — Anónimo
+  </p>
+</div>
+
+<!-- SOBRE -->
+
+<div id="screen-envelope">
+
+  <div class="envelope-wrap" onclick="openEnvelope()">
+
+    <div class="env-body">
+      <div class="env-tri-l"></div>
+      <div class="env-tri-r"></div>
+    </div>
+
+    <div class="env-flap-wrap">
+      <div class="env-flap" id="envFlap"></div>
+    </div>
+
+    <div class="env-wax">
+      ♥
+    </div>
+
+  </div>
+
+  <p class="open-hint">
+    — Toca el sobre para abrir tu carta —
+  </p>
+
+  <div class="btn-row">
+    <button class="btn-primary" onclick="openEnvelope()">
+      Abrir carta ♥
+    </button>
+  </div>
+
+</div>
+
+<!-- CARTA -->
+
+<div id="screen-letter">
+
+  <div class="letter-paper">
+
+    <div class="letter-top-ornament">
+      Con amor, para siempre
+    </div>
+
+    <div class="letter-date-loc">
+      <span>20 de mayo de 2026</span>
+    </div>
+
+    <div class="letter-to">
+      Para mi Mocosa hermosa:
+    </div>
+
+    <div class="letter-saludo">
+      Mi amor,
+    </div>
+
+    <div class="letter-body">
+
+Hoy quise escribirte esta carta porque hay sentimientos que a veces el corazón guarda demasiado y que merecen convertirse en palabras. Y si hay algo que aprendí este año contigo, es que el amor verdadero no solo se siente sino que también se demuestra, se cuida y se elige todos los días.
+
+Hace un año comenzó nuestra historia, y aunque el tiempo pasó rápido, siento que contigo viví muchísimo más de lo que imaginé. En estos meses compartimos risas, momentos inesperados, conversaciones eternas, desvelos, canciones, pequeños enojos, reconciliaciones, abrazos inolvidables y recuerdos que poco a poco se volvieron parte de mí. Y mientras más tiempo pasa, más me doy cuenta de que no solo me enamoré de ti, también me enamoré de la vida cuando tu estás en ella.
+
+Gracias por quedarte conmigo incluso en mis momentos difíciles. Gracias por tu paciencia, por escucharme, por entenderme cuando ni yo mismo sabía cómo explicar lo que sentía. Gracias por darme tranquilidad con una sola palabra y felicidad con una simple sonrisa. Contigo aprendí que el amor no siempre necesita grandes cosas; a veces vive en los detalles pequeños, en las llamadas largas, en los “¿ya comiste?”, en las canciones que me recuerdan a ti y en esa sensación tan bonita de saber que existes.
+
+A veces me pongo a pensar en cómo eras simplemente una persona más en el mundo y cómo ahora te convertiste en alguien indispensable para mi vida. Porque ya no puedo escuchar ciertas canciones sin pensar en ti. Ya no puedo imaginar mis días sin tus mensajes, sin tu voz o sin esa forma tan única que tienes de hacerme sentir tranquilo.
+
+Me gusta todo de ti. Me gusta tu manera de hablar, tu risa, tus gestos, incluso esas pequeñas cosas que quizás tú ni notas pero que yo adoro profundamente. Me gusta cómo haces que cualquier momento contigo se vuelva especial, cómo conviertes algo simple en un recuerdo inolvidable.
+
+Y si soy completamente sincero, una de las cosas más bonitas de este año fue descubrir que el amor no siempre tiene que ser perfecto para ser real. Porque nosotros también tuvimos momentos difíciles, diferencias, silencios y días complicados,pero aun así seguimos aquí, eligiéndonos. Y eso vale muchísimo más que cualquier historia perfecta.
+
+Gracias por enseñarme que amar también es aprender, crecer y acompañarse. Gracias por ser refugio, calma y felicidad al mismo tiempo. Hay noches en las que me quedo pensando en todo lo que vivimos y me doy cuenta de algo: contigo encontré una paz que no sabía que necesitaba. Encontré a alguien con quien puedo ser completamente yo mismo, sin miedo, sin fingir nada. Y eso es algo demasiado valioso.
+
+Pero hoy no solo pienso en lo que vivimos, también pienso en todo lo que todavía quiero vivir contigo.
+
+Pienso en todas las conversaciones que aún nos faltan hasta la madrugada. En todos los abrazos que todavía quiero darte. En los lugares que me gustaría conocer contigo, en las fotos que aún no tomamos, en las canciones que todavía no dedicamos y en todos esos pequeños momentos simples que, estando a tu lado, terminan sintiéndose enormes.
+
+Quiero seguir creciendo contigo.
+Quiero seguir aprendiendo de ti.
+Quiero seguir viendo cómo cumples tus sueños y cómo te conviertes cada día en una versión más fuerte y más hermosa de ti.
+
+Me emociona pensar en el futuro donde todavía segimos juntos hablando de tonterías, riéndonos de nuestros recuerdos y acompañándonos en cada etapa de la vida. Me emociona imaginar más aniversarios contigo, más noches hablando hasta quedarnos dormidos, más momentos donde podamos decir “seguimos aquí”.
+
+Porque contigo no quiero algo pasajero.
+Contigo quiero tiempo.
+Quiero historia.
+Quiero recuerdos.
+Quiero un amor que siga creciendo incluso cuando los años pasen.
+
+Quiero ser parte de tus planes futuros y también quiero que tú seas parte de los míos. Quiero apoyarte cuando tengas miedo, celebrar contigo cuando logres algo importante y recordarte siempre lo increíble que eres incluso cuando tú lo olvides.
+
+Y aunque no sé exactamente qué nos espera más adelante, sí sé algo con total seguridad: quiero intentarlo contigo. Quiero seguir apostando por nosotros, seguir construyendo esto tan bonito que tenemos y seguir demostrando que el amor también puede sentirse como hogar.
+
+Porque después de todo este tiempo, todavía sigues siendo mi pensamiento favorito al despertar y la persona que más tranquilidad le da a mi corazón.
+
+Si pudiera volver al día en que todo comenzó, volvería a elegirte sin pensarlo dos veces. Porque después de todo este tiempo,sigo sonriendo cuando hablo contigo y sigo encontrando en ti mi lugar seguro.
+
+Siempre ten presente esto: te amo profundamente, de una manera sincera, real y enorme. Y espero que este primer año juntos sea apenas el comienzo de una historia muchísimo más larga, más fuerte y más hermosa para los dos.
+
+Te amo muchísimo, hoy, mañana y en cada día que venga después.
+    </div>
+
+    <div class="quote-box">
+      “Eres la casualidad más bonita que llegó para quedarse.”
+
+      <span class="quote-author">
+        — Anónimo
+      </span>
+    </div>
+
+    <div class="letter-despedida">
+
+      <div>
+        Con todo mi amor,
+      </div>
+
+      <div class="letter-firma">
+        Josh♥
+      </div>
+
+    </div>
+
+    <div class="letter-posdata">
+      P.D. Si volviera a comenzar mi vida, volvería a elegirte.
+    </div>
+
+    <div class="letter-wax-seal">
+      <div class="wax-circle">
+        ♥
+      </div>
+    </div>
+
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-secondary" onclick="window.print()">
+      Imprimir
+    </button>
+
+  </div>
+
+</div>
+
+</div>
+
+<script>
+
+/* abrir */
+
+function openEnvelope(){
+
+  document.getElementById('envFlap').classList.add('open');
+
+  setTimeout(() => {
+
+    document.getElementById('screen-envelope').style.display='none';
+
+    document.getElementById('screen-letter').style.display='block';
+
+    window.scrollTo({
+      top:0,
+      behavior:'smooth'
+    });
+
+  },900);
+}
+/* toast */
+
+function showToast(msg){
+
+  const t=document.getElementById('toast');
+
+  t.textContent=msg;
+
+  t.classList.add('show');
+
+  setTimeout(()=>{
+    t.classList.remove('show');
+  },2500);
+}
+
+/* pétalos */
+
+function createPetals(){
+
+  const layer=document.getElementById('petalsLayer');
+
+  const symbols=['🌸','🌺','🌷','❀'];
+
+  for(let i=0;i<18;i++){
+
+    const p=document.createElement('div');
+
+    p.className='petal';
+
+    p.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+
+    p.style.left=Math.random()*100+'%';
+
+    p.style.fontSize=(12+Math.random()*12)+'px';
+
+    p.style.animationDuration=(18+Math.random()*18)+'s';
+
+    p.style.animationDelay=(Math.random()*15)+'s';
+
+    layer.appendChild(p);
+  }
+}
+
+createPetals();
+
+</script>
+
+</body>
+</html>
